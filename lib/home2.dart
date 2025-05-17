@@ -7,34 +7,29 @@ class Home2Page extends StatefulWidget {
   State<Home2Page> createState() => _Home2PageState();
 }
 
-// AnimationController
-
 class _Home2PageState extends State<Home2Page>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<double> _animation;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
       vsync: this,
     );
 
-    _animation = CurvedAnimation(
+    _fadeAnimation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
     );
 
     _animationController.forward();
-
-    super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _animationController.dispose();
     super.dispose();
   }
@@ -42,15 +37,33 @@ class _Home2PageState extends State<Home2Page>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home 2 Page')),
+      appBar: AppBar(
+        title: const Text('Home 2 Page', style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
       body: Center(
         child: FadeTransition(
-          opacity: _animation,
+          opacity: _fadeAnimation,
           child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.green,
-            child: Text('Hello world'),
+            width: 220,
+            height: 220,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(2, 6),
+                )
+              ],
+            ),
+            alignment: Alignment.center,
+            child: const Text(
+              'Hello World',
+              style: TextStyle(fontSize: 22, color: Colors.white),
+            ),
           ),
         ),
       ),
